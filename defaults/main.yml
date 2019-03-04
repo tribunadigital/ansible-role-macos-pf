@@ -1,2 +1,3 @@
 ---
-# defaults file for macos_pf
+# Please define your own rules!
+macos_pf_rules: ''

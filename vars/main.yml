@@ -1,2 +1,5 @@
 ---
-# vars file for macos_pf
+macos_pf_anchor: com.ansible
+macos_pf_anchor_dir: /etc/pf.anchors
+macos_pf_anchor_path: '{{ macos_pf_anchor_dir }}/{{ macos_pf_anchor }}'
+macos_pf_config_path: /etc/pf.conf

@@ -1,2 +1,34 @@
 ---
-# tasks file for macos_pf
+- name: Create packet filter anchor
+  copy:
+    content: '{{ macos_pf_rules }}'
+    dest: '{{ macos_pf_anchor_path }}'
+  register: anchor
+
+- name: Change packet filter config
+  lineinfile:
+    path: '{{ macos_pf_config_path }}'
+    line: '{{ item }}'
+    backup: yes
+  with_items:
+    - 'anchor "{{ macos_pf_anchor }}"'
+    - 'load anchor "{{ macos_pf_anchor }}" from "{{ macos_pf_anchor_path }}"'
+  register: config
+
+- name: Verify packet filter config
+  command: pfctl -nf '{{ macos_pf_config_path }}'
+  changed_when: no
+
+- name: Reload packet filter config
+  command: pfctl -f '{{ macos_pf_config_path }}'
+  when: anchor is changed or config is changed
+
+- name: Verify packet filter status
+  shell: 'pfctl -s info 2>/dev/null | egrep "^Status: Enabled"'
+  ignore_errors: yes
+  changed_when: no
+  register: status
+
+- name: Enable packet filter
+  command: pfctl -e
+  when: status is failed

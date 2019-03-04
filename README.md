@@ -4,6 +4,8 @@ An Ansible Role to manage the
 [Packet Filter (pf)](https://en.wikipedia.org/wiki/PF_(firewall))
 Firewall of macOS.
 
+**NOTE: Currently Packet Filter will be disabled again after a reboot!**
+
 
 ## Requirements
 
