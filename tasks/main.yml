@@ -1,14 +1,14 @@
 ---
 - name: Create packet filter anchor
   copy:
-    content: '{{ macos_pf_rules }}'
+    content: '{{ macos_pf_rules }}'
     dest: '{{ macos_pf_anchor_path }}'
   register: anchor
 
 - name: Change packet filter config
   lineinfile:
     path: '{{ macos_pf_config_path }}'
-    line: '{{ item }}'
+    line: '{{ item }}'
     backup: yes
   with_items:
     - 'anchor "{{ macos_pf_anchor }}"'
