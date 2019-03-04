@@ -1,0 +1,20 @@
+---
+os: osx
+
+install:
+  - sudo easy_install pip
+  - sudo pip install ansible
+  - ansible --version
+  - echo '[defaults]' > ansible.cfg
+  - echo 'roles_path = ..' >> ansible.cfg
+  - echo 'inventory = tests/inventory' >> ansible.cfg
+
+script:
+  - ansible-playbook tests/test.yml --syntax-check
+  - 'ruby -rsocket -e "Socket.tcp(%q{facebook.com}, 443, connect_timeout: 10)"'
+  - ansible-playbook tests/test.yml
+  - 'ruby -rsocket -e "exit 1 if Socket.tcp(%q{facebook.com}, 443, connect_timeout: 10) rescue Errno::EHOSTUNREACH"'
+  - ansible-playbook tests/test.yml | tee /tmp/output.txt; grep -q 'changed=0.*failed=0' /tmp/output.txt
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

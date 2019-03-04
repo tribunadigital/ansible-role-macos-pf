@@ -1,5 +1,7 @@
 # Ansible Role: macos_pf
 
+[![Build Status](https://travis-ci.org/bjoernalbers/ansible-role-macos-pf.svg?branch=master)](https://travis-ci.org/bjoernalbers/ansible-role-macos-pf)
+
 An Ansible Role to manage the
 [Packet Filter (pf)](https://en.wikipedia.org/wiki/PF_(firewall))
 Firewall of macOS.

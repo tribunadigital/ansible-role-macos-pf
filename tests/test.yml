@@ -1,5 +1,10 @@
 ---
 - hosts: localhost
-  remote_user: root
+  connection: local
+  become: yes
   roles:
-    - macos_pf
+    - role: ansible-role-macos-pf
+      macos_pf_rules: |
+        # Deny access to facebook for increased productivity :-)
+        block drop out inet proto tcp from any to facebook.com port 443
+        block drop out inet proto tcp from any to facebook.com port 80
