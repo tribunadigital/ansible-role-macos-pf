@@ -1,38 +1,43 @@
-Role Name
-=========
+# Ansible Role: macos_pf
 
-A brief description of the role goes here.
+An Ansible Role to manage the
+[Packet Filter (pf)](https://en.wikipedia.org/wiki/PF_(firewall))
+Firewall of macOS.
 
-Requirements
-------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Requirements
 
-Role Variables
---------------
+The target host must be a Mac.
+Also the role must be applied as root with `become: yes`.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-Dependencies
-------------
+### Role Variables
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+- `macos_pf_rules` (see example below)
 
-Example Playbook
-----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## Dependencies
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+None.
 
-License
--------
 
-BSD
+## Example Playbook
 
-Author Information
-------------------
+```yml
+---
+- name: Manage Packet Filter (pf) Firewall on macOS
+  hosts: macs
+  # You have to become root to install the facts.
+  become: yes
+  roles:
+    - role: macos_pf
+      macos_pf_rules: |
+        # Deny access to facebook for increased productivity :-)
+        block drop out inet proto tcp from any to facebook.com port 443
+        block drop out inet proto tcp from any to facebook.com port 80
+```
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+## License
+
+This Ansible role is released under the [MIT License](LICENSE.txt).
