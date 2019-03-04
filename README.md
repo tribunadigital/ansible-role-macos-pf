@@ -31,7 +31,7 @@ None.
 ---
 - name: Manage Packet Filter (pf) Firewall on macOS
   hosts: macs
-  # You have to become root to install the facts.
+  # You have to become root to deploy the firewall rules!
   become: yes
   roles:
     - role: macos_pf
