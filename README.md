@@ -23,6 +23,10 @@ These target host(s) must meet these requirements:
 
 Define your firewall rules with `macos_pf_rules`.
 
+**Please use IP addresses instead FQDN's in your firewall rules!
+Because the Mac might not be able to resolve those hostnames during boot and
+so the packet filter fails to start.**
+
 
 ## Dependencies
 
