@@ -19,7 +19,7 @@ These target host(s) must meet these requirements:
    yes` - see example playbook below.
 
 
-### Role Variables
+## Role Variables
 
 Define your firewall rules with `macos_pf_rules`.
 
