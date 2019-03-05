@@ -23,15 +23,16 @@
   command: pfctl -f '{{ macos_pf_config_path }}'
   when: anchor is changed or config is changed
 
-- name: Verify packet filter status
-  shell: 'pfctl -s info 2>/dev/null | egrep "^Status: Enabled"'
+- name: Verify packet filter is enabled
+  shell: >
+    pfctl -s info 2>/dev/null | egrep -i '^status: enabled'
   ignore_errors: yes
   changed_when: no
-  register: status
+  register: pf_enabled
 
 - name: Enable packet filter
   command: pfctl -e
-  when: status is failed
+  when: pf_enabled is failed
 
 - name: Enable packet filter permanently
   lineinfile:
