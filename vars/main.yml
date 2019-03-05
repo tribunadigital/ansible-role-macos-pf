@@ -3,3 +3,4 @@ macos_pf_anchor: com.ansible
 macos_pf_anchor_dir: /etc/pf.anchors
 macos_pf_anchor_path: '{{ macos_pf_anchor_dir }}/{{ macos_pf_anchor }}'
 macos_pf_config_path: /etc/pf.conf
+macos_pf_plist: /System/Library/LaunchDaemons/com.apple.pfctl.plist

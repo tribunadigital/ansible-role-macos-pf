@@ -32,3 +32,18 @@
 - name: Enable packet filter
   command: pfctl -e
   when: status is failed
+
+- name: Enable packet filter permanently
+  lineinfile:
+    path: '{{ macos_pf_plist }}'
+    line: "\t\t<string>-e</string>"
+    insertafter: '<string>pfctl</string>'
+  ignore_errors: yes
+  register: enable_pf_permanently
+
+- name: Fail when packet filter couldn't be enabled permanently
+  fail:
+    msg: >
+      You must disable System Integrity Protection (SIP) during this run!
+      Otherwise the Packet Filter can't be enabled permanently across reboots.
+  when: enable_pf_permanently is failed
