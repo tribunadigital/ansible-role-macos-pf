@@ -46,4 +46,4 @@
     msg: >
       You must disable System Integrity Protection (SIP) during this run!
       Otherwise the Packet Filter can't be enabled permanently across reboots.
-  when: enable_pf_permanently is failed
+  when: enable_pf_permanently is failed and not macos_pf_ignore_sip

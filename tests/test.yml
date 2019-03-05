@@ -4,6 +4,7 @@
   become: yes
   roles:
     - role: ansible-role-macos-pf
+      macos_pf_ignore_sip: yes # Travis CI has SIP enabled.
       macos_pf_rules: |
         # Deny access to facebook for increased productivity :-)
         block drop out inet proto tcp from any to facebook.com port 443
