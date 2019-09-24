@@ -41,6 +41,7 @@
     insertafter: '<string>pfctl</string>'
   ignore_errors: yes
   register: enable_pf_permanently
+  when: enable_pf_permanently_sip
 
 - name: Fail when packet filter couldn't be enabled permanently
   fail:
@@ -48,3 +49,27 @@
       You must disable System Integrity Protection (SIP) during this run!
       Otherwise the Packet Filter can't be enabled permanently across reboots.
   when: enable_pf_permanently is failed and not macos_pf_ignore_sip
+
+- name: Ensure directory is exist
+  file:
+    path: '{{ macos_user_launch_agents }}'
+    state: directory
+    owner: '{{ ansible_ssh_user }}'
+  when: enable_pf_permanently_user is defined
+
+- name: Enable packet filter permanently on user level
+  copy:
+    src: files/com.user.pfloginscript.plist
+    dest: '{{ macos_user_launch_agents }}'
+    owner: '{{ ansible_ssh_user }}'
+  register: enable_pf_permanently
+  when: enable_pf_permanently_user is defined
+
+- name: Enabled packet filter on user (auto)login
+  block:
+    - command: launchctl load -w {{ macos_user_pf_plist }}
+    
+    - debug:
+        msg: >
+          You must add user to sudoers without password! Otherwise the Packet Filter can't be enabled permanently across reboots.
+  when: enable_pf_permanently_user is defined and pf_enabled is failed

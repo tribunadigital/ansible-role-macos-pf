@@ -4,4 +4,6 @@ macos_pf_anchor_dir: /etc/pf.anchors
 macos_pf_anchor_path: '{{ macos_pf_anchor_dir }}/{{ macos_pf_anchor }}'
 macos_pf_config_path: /etc/pf.conf
 macos_pf_plist: /System/Library/LaunchDaemons/com.apple.pfctl.plist
+macos_user_launch_agents: '/Users/{{ ansible_ssh_user }}/Library/LaunchAgents'
+macos_user_pf_plist: '{{ macos_user_launch_agents }}/com.user.pfloginscript.plist'
 macos_pf_ignore_sip: no # Mainly used for integration testing on Travis CI.
