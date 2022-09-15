@@ -1,0 +1,7 @@
+#!/bin/bash
+{{ ansible_managed | comment }}
+
+/bin/sleep 5
+/usr/sbin/ipconfig waitall
+/sbin/pfctl -E -f {{ macos_pf_config_path }}
+

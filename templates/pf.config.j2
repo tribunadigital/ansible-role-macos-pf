@@ -1,0 +1,4 @@
+{{ ansible_managed | comment }}
+anchor "{{ macos_pf_anchor }}.pf"
+load anchor "{{ macos_pf_anchor }}.pf" from "{{ macos_pf_anchor_path }}"
+
