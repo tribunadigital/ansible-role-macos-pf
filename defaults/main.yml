@@ -1,4 +1,5 @@
 ---
 # Please define your own rules!
 macos_pf_rules: ''
+macos_pf_default_firewal: False
 

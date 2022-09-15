@@ -49,11 +49,18 @@
     state: started
   when: plist is changed
 
-- name: Enable firewall (PF)
+- name: Enable/Disable default MacOS firewall
   community.general.osx_defaults:
     domain: /Library/Preferences/com.apple.alf
     key: globalstate
     type: int
-    value: 1
+    value: "{{ 1 if macos_pf_default_firewal else 0 }}"
     state: present
+  register: firewall
+
+- name: Message about default MacOS firewall
+  ansible.builtin.debug:
+    msg:
+    - "WARNING! Default MacOS firewall {{ 'enabled' if macos_pf_default_firewal else 'disabled' }}. Need reboot system to apply changes!{{ ' Be careful you may lose remote access to MacOS!' if macos_pf_default_firewal }}"
+  when: firewall is changed
 
